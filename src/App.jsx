@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "./App.css";
+import styled from "styled-components";
 
 function App() {
   const [text, setText] = useState("");
@@ -60,41 +61,70 @@ function App() {
 
   return (
     <>
+      <HeaderContainer>
       <h1>
         {welcome.greeting} {welcome.title}
       </h1>
-      <label htmlFor="search">Name</label>
-      <input type="text" id="search" onChange={onChangeTextHandle} />
-      <br></br>
-      <br></br>
-      <label htmlFor="uploadPic">Profile Picture</label>
-      <input type="file" id="uploadPic" onChange={onChangeTextHandle} />
-      <br></br>
-      <br></br>
-      <label htmlFor="bio">upload Bio</label>
-      <input type="text" id="bio" onChange={onChangeTextHandle} />
-
-      <button type="button" onClick={onClickHandler}>
-        upload
-      </button>
+        <div className="input-wrapper-container">
+        <label htmlFor="search">Name
+        <input type="text" id="search" onChange={onChangeTextHandle} />
+        </label>
+        <label htmlFor="uploadPic" >Profile Picture
+        <input type="file"id="uploadPic"title=" "  onChange={onChangeTextHandle} />
+        </label>
+        <label htmlFor="bio">upload Bio
+        <input type="text" id="bio" onChange={onChangeTextHandle} />
+        </label>
+        <button type="button" onClick={onClickHandler}>
+          upload
+        </button>
+        </div>
+      </HeaderContainer>
       <div>
         {myList.map((person) => {
           return (
-            <div className="personDiv">
+            <PersonBox>
               <img
                 src={person.url}
                 alt={person.name}
                 style={{ width: 100, height: 150 }}></img>
               <ul key="500">
-                <li>{person.name}</li>
+                <ul>{person.name}</ul>
                 <p>{person.aboutMe}</p>
               </ul>
-            </div>
+            </PersonBox>
           );
         })}
       </div>
     </>
   );
 }
+const PersonBox = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 50px;
+  border: 5px groove black;
+  `
+  const HeaderContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+
+    & label {
+      display: flex;
+      font-weight: bolder;
+      gap: 10px;
+    }
+    &input-wrapper-container {
+      display: flex;
+      flex-direction: column;
+      width: 45%;
+      gap: 6px;
+    }
+    input[type="file"] {
+      color: transparent;
+    }
+  `;
 
 export default App;
