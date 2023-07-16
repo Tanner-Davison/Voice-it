@@ -14,8 +14,8 @@ function App() {
     !trueOrFalse ? "select image" :  + selectedFile.name
   );
   const welcome = {
-    title: "React APP",
-    greeting: "Welcome to my",
+    title: <h1>VOICE-IT</h1>,
+    greeting: <h3>Welcome to </h3>,
   };
   useEffect(() => {
     if (selectedFile) {
@@ -62,9 +62,9 @@ function App() {
   return (
     <>
       <HeaderContainer>
-        <h1>
-          {welcome.greeting} {welcome.title}
-        </h1>
+        <div className="greeting">
+          {welcome.greeting} <span>{welcome.title}</span>
+        </div>
         <div className="input-wrapper-container">
           <label htmlFor="search">
             Name<span>:</span>
@@ -79,7 +79,12 @@ function App() {
 
           <label htmlFor="bio">
             About<span>:</span>
-            <input type="text" id="bio"size='24' onChange={onChangeTextHandle} />
+            <input
+              type="text"
+              id="bio"
+              size="24"
+              onChange={onChangeTextHandle}
+            />
           </label>
           <label htmlFor="uploadPic">
             Add Photo :
@@ -97,7 +102,7 @@ function App() {
             />
           </label>
           <button type="button" onClick={onClickHandler}>
-            post <span className="material-symbols-outlined"> campaign </span>
+            VOICE-IT <span className="material-symbols-outlined"> campaign </span>
           </button>
         </div>
       </HeaderContainer>
@@ -109,12 +114,19 @@ function App() {
 }
 
 const HeaderContainer = styled.div`
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   font-family: "Wix Madefor Display", sans-serif;
   font-size: 20px;
+  & .greeting{
+    display:flex;
+    font-weight:bolder;
+    font-size:30px;
+    
+  }
 
   & label {
     display: flex;
@@ -124,20 +136,25 @@ const HeaderContainer = styled.div`
     gap: 10px;
   }
   & .input-wrapper-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
     width: 400px;
     gap: 20px;
+    margin-bottom:25px;
   }
 
   & button {
+    position: absolute;
+    top:140px;
+    right:50%;
     display: flex;
     justify-content: center;
     align-self: center;
     text-align: center;
-    width: 80px;
+    width: 110px;
     height: 30px;
     background-color: #4d8cf2;
     font-size: 15px;
@@ -158,6 +175,8 @@ const HeaderContainer = styled.div`
     background-color: #3b73ce;
     border-color: #729fe7;
     padding: 15px;
+    width:120px;
+    height:40px;
     justify-content: center;
     align-items: center;
     cursor:pointer;
