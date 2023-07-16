@@ -76,8 +76,13 @@ function App() {
               onChange={onChangeTextHandle}
             />
           </label>
+
+          <label htmlFor="bio">
+            About<span>:</span>
+            <input type="text" id="bio"size='24' onChange={onChangeTextHandle} />
+          </label>
           <label htmlFor="uploadPic">
-            Avatar :
+            Add Photo :
             <label
               className={trueOrFalse ? "chooseFile" : "fileChosen"}
               htmlFor="uploadPic">
@@ -90,11 +95,6 @@ function App() {
               title=" "
               onChange={onChangeTextHandle}
             />
-          </label>
-
-          <label htmlFor="bio">
-            Write Bio<span>:</span>
-            <input type="text" id="bio" onChange={onChangeTextHandle} />
           </label>
           <button type="button" onClick={onClickHandler}>
             post <span className="material-symbols-outlined"> campaign </span>
@@ -160,6 +160,7 @@ const HeaderContainer = styled.div`
     padding: 15px;
     justify-content: center;
     align-items: center;
+    cursor:pointer;
   }
   span {
     position: relative;
@@ -178,6 +179,11 @@ const HeaderContainer = styled.div`
     border-radius: 9px;
     margin-left: 20px;
     color: white;
+  }
+  & label:hover .fileChosen {
+    background-color: #3b73ce;
+    border-color: #729fe7;
+    cursor: pointer;
   }
   & label > .chooseFile {
     background-color: #4d8cf2;
