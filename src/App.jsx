@@ -11,26 +11,31 @@ function App() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [trueOrFalse, setTrueOrFalse] = useState(false);
   const [uploadPic, setUploadPic] = useState(
-    !trueOrFalse ? "select image" :  + selectedFile.name
+    !trueOrFalse ? "select image" : +selectedFile.name
   );
+  const [bioClass, setBioClass] = useState(false);
+
   const welcome = {
     title: <h1>VOICE-IT</h1>,
     greeting: <h3>Welcome to </h3>,
   };
+
   useEffect(() => {
     if (selectedFile) {
       console.log("selectedFile is not null. It contains:", selectedFile);
       setUploadPic("File Name : " + selectedFile.name);
-    } else {
+    } else if (!selectedFile) {
       console.log("selectedFile is null.");
     }
-  }, [selectedFile,uploadPic]);
+    bio.length > 0 ? setBioClass(true) : setBioClass(false);
+  }, [selectedFile, uploadPic, bio, bioClass]);
+
   const onChangeTextHandle = (event) => {
     if (event.target.id === "uploadPic") {
       setSelectedFile(event.target.files[0]);
-      
     } else if (event.target.id === "bio") {
       setBio(event.target.value);
+      console.log(bioClass);
     } else {
       setText(event.target.value);
     }
@@ -51,38 +56,45 @@ function App() {
       bio: bio,
     };
     setPeople((prevPeople) => [newPerson, ...prevPeople]);
-    setText(" ")
+    setText(" ");
     setCountID(countID + 1);
-    setTrueOrFalse(false)
-    setSelectedFile(null)
-    setUploadPic(trueOrFalse ? "select image" : "previous upload : "+selectedFile.name);
-    console.log(people);
+    setTrueOrFalse(false);
+    setSelectedFile(null);
+    setUploadPic(
+      trueOrFalse ? "select image" : "Last File : " + selectedFile.name
+    );
+    setBioClass(false);
   };
 
   return (
     <>
       <HeaderContainer>
         <div className="greeting">
-          {welcome.greeting} <span>{welcome.title}</span>
+          {welcome.greeting} <span id='welcome'>{welcome.title}</span>
         </div>
         <div className="input-wrapper-container">
-          <label htmlFor="search">
+          <label htmlFor="firstLastName">
             Name<span>:</span>
             <input
               type="text"
               size="24"
-              id="search"
-              placeholder={text}
+              id="firstLastName"
+              placeholder="exampleName || @handle"
               onChange={onChangeTextHandle}
             />
           </label>
 
           <label htmlFor="bio">
-            About<span>:</span>
-            <input
+            Create Voice-It<span>:</span>
+            <textarea
+              className={bioClass ? "typing" : "notTyping"}
               type="text"
               id="bio"
-              size="24"
+              rows="14"
+              cols="24"
+              wrap="soft"
+              maxLength="300"
+              placeholder="every opinion matters...Whats yours?"
               onChange={onChangeTextHandle}
             />
           </label>
@@ -102,7 +114,8 @@ function App() {
             />
           </label>
           <button type="button" onClick={onClickHandler}>
-            VOICE-IT <span className="material-symbols-outlined"> campaign </span>
+            VOICE-IT{" "}
+            <span className="material-symbols-outlined" id='microphone'> campaign </span>
           </button>
         </div>
       </HeaderContainer>
@@ -114,47 +127,65 @@ function App() {
 }
 
 const HeaderContainer = styled.div`
-
+  position: sticky;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
   font-family: "Wix Madefor Display", sans-serif;
   font-size: 20px;
-  & .greeting{
-    display:flex;
-    font-weight:bolder;
-    font-size:30px;
-    
+  & .greeting {
+    display: flex;
+    font-weight: bolder;
+    font-size: 30px;
+  }
+  & #welcome {
+    position: relative;
+    border-left: 3px solid black;
+    padding-left: 5px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
+    border-top-right-radius: 50px;
+    border-bottom-right-radius: 50px;
+  }
+  & .greeting > h3 {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 125px;
+    text-align: end;
+    margin-right: 20px;
   }
 
   & label {
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     font-weight: bolder;
     gap: 10px;
   }
   & .input-wrapper-container {
-    position: relative;
+    position: sticky;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+
+    padding: 50px;
     width: 400px;
     gap: 20px;
-    margin-bottom:25px;
+    margin-bottom: 25px;
+    border-radius: 50px;
   }
 
   & button {
-    position: absolute;
-    top:140px;
-    right:50%;
+    position: relative;
+    top: 12px;
+    right: 14%;
     display: flex;
     justify-content: center;
     align-self: center;
     text-align: center;
-    width: 110px;
+    width: 120px;
     height: 30px;
     background-color: #4d8cf2;
     font-size: 15px;
@@ -162,24 +193,48 @@ const HeaderContainer = styled.div`
     color: #fff;
     border: 2px solid #9ec3ff;
     border-radius: 9px;
-  }
-  & button:only-of-type span {
-    visibility: hidden;
-  }
-  & button:hover:only-of-type span {
-    visibility: visible;
     margin-left: 10px;
+    
   }
+
+
   & button:hover {
     display: flex;
     background-color: #3b73ce;
     border-color: #729fe7;
-    padding: 15px;
-    width:120px;
-    height:40px;
+    width: 115px;
+    height: 35px;
     justify-content: center;
     align-items: center;
-    cursor:pointer;
+    cursor: pointer;
+  }
+  & #microphone {
+    margin-left:6px;
+    color:white;
+  }
+  & .notTyping {
+    display: flex;
+    background-color: #e1ebee;
+    border-radius: 10px;
+    border: 3px groove #e0ffff;
+    height: 45px;
+    resize: none;
+  }
+  
+  & .typing {
+    display: flex;
+    background-color: #d5e6eb;
+    border-radius: 10px;
+    border: 3px groove #e0ffff;
+    height: 45px;
+    word-wrap: break-word;
+    font-family: "Wix Madefor Display", sans-serif;
+  }
+  & #firstLastName {
+    border-radius: 10px;
+    height: 25px;
+    font-family: "Wix Madefor Display", sans-serif;
+    font-weight: bold;
   }
   span {
     position: relative;
@@ -224,6 +279,41 @@ const HeaderContainer = styled.div`
   & .chooseFile:hover .material-symbols-outlined {
     visibility: visible;
     padding: 5px;
+  }
+
+  @media only screen and (max-width: 470px) {
+    & .greeting {
+      display: flex;
+      flex-direction: row;
+      font-size: 22px;
+      padding: 10px;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+    & .greeting > h3 {
+      width: 125px;
+      text-align: end;
+      margin-right: 5px;
+    }
+    & #welcome {
+      position: relative;
+      border-left: 5px solid black;
+      padding-left: 5px;
+      border-top-left-radius: 50px;
+      border-bottom-left-radius: 50px;
+      right: -3px;
+      background-color: #d9edf3;
+    }
+    position: relative;
+    justify-self: center;
+    margin-left: 20px;
+    border: 3px solid black;
+    height: 100%;
+    width: 92%;
+    right: 8px;
+    & .input-wrapper-container {
+      width: 90%;
+    }
   }
 `;
 

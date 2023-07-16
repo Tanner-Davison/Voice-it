@@ -96,6 +96,7 @@ const PersonBox = styled.div`
   margin-top: 50px;
   border: 5px groove black;
   font-family: "Wix Madefor Display", sans-serif;
+  background-color: #ffffff;
   & ul {
   }
   & img {
