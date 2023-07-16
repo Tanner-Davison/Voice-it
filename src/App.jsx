@@ -1,130 +1,205 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
+import People from "./components/ListOfPeople";
 import styled from "styled-components";
 
 function App() {
   const [text, setText] = useState("");
+  const [people, setPeople] = useState([]);
+  const [countID, setCountID] = useState(0);
+  const [bio, setBio] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [trueOrFalse, setTrueOrFalse] = useState(false);
+  const [uploadPic, setUploadPic] = useState(
+    !trueOrFalse ? "select image" :  + selectedFile.name
+  );
   const welcome = {
     title: "React APP",
     greeting: "Welcome to my",
   };
+  useEffect(() => {
+    if (selectedFile) {
+      console.log("selectedFile is not null. It contains:", selectedFile);
+      setUploadPic("File Name : " + selectedFile.name);
+    } else {
+      console.log("selectedFile is null.");
+    }
+  }, [selectedFile,uploadPic]);
   const onChangeTextHandle = (event) => {
-    setText(event.target.value);
+    if (event.target.id === "uploadPic") {
+      setSelectedFile(event.target.files[0]);
+      
+    } else if (event.target.id === "bio") {
+      setBio(event.target.value);
+    } else {
+      setText(event.target.value);
+    }
+
+    if (selectedFile) {
+      console.log("selectedFile is not null. It contains:", selectedFile);
+      setUploadPic("File Name : " + selectedFile.name);
+    } else {
+      console.log("selectedFile is null.");
+    }
   };
+
   const onClickHandler = () => {
-    myList.push({ name: { text }, id: 5, key: 5 });
-    console.log(myList);
-    setText("");
+    const newPerson = {
+      name: text,
+      id: countID,
+      file: selectedFile,
+      bio: bio,
+    };
+    setPeople((prevPeople) => [newPerson, ...prevPeople]);
+    setText(" ")
+    setCountID(countID + 1);
+    setTrueOrFalse(false)
+    setSelectedFile(null)
+    setUploadPic(trueOrFalse ? "select image" : "previous upload : "+selectedFile.name);
+    console.log(people);
   };
-  const myList = [
-    {
-      name: "Johnny",
-      age: 26,
-      gender: "male",
-      url: "https://img.freepik.com/premium-photo/portrait-serious-handsome-man-looking-camera-against-white-background_23-2148213410.jpg",
-      aboutMe:
-        "I am a professional web developer with 20 years of on the job experience and a complete lack of respect for Jr Developers.",
-    },
-    {
-      name: "Tiarra",
-      age: 30,
-      gender: "female",
-      url: "https://www.un.org/sites/un2.un.org/files/2021/04/004-alexander-khimushin.jpg",
-      aboutMe:
-        " Kila mtu anayo haki ya kushiriki katika maisha ya utamaduni ya jamii yo yote, na ana haki ya kufurahia ustadi wa kazi na kushiriki katika maendeleo ya mambo ya sayansi na faida zinazotokana nayo.",
-    },
-    {
-      name: "Proffessor Powers",
-      age: 23,
-      gender: "male",
-      url: "https://photos.lensculture.com/large/e88d815d-da98-4d24-94e6-a4c2a47c4093.jpg",
-      aboutMe:
-        "Nee how my friend I meditate by day and pray by night. If you like my style venmo me and I will show you the way of the budah. Peace and love to all. @asian-boy669",
-    },
-    {
-      name: "Enrique Salvador",
-      age: 35,
-      gender: "female",
-      url: "https://photos.lensculture.com/large/8fb1f7cf-28c0-4e63-98ea-9a1bd2df2f82.jpg",
-      aboutMe:
-        "I am a covid scientist. I think china very populated with virus so I move to states.",
-    },
-    {
-      name: "Dr Robertson",
-      age: 46,
-      gender: "male",
-      url: "https://www.un.org/sites/un2.un.org/files/019-alexander-khimushin.jpg",
-      aboutMe:
-        "I am Dr Robertson. A very successfull indian and african biochemical reactor manufacturer",
-    },
-  ];
 
   return (
     <>
       <HeaderContainer>
-      <h1>
-        {welcome.greeting} {welcome.title}
-      </h1>
+        <h1>
+          {welcome.greeting} {welcome.title}
+        </h1>
         <div className="input-wrapper-container">
-        <label htmlFor="search">Name
-        <input type="text" id="search" onChange={onChangeTextHandle} />
-        </label>
-        <label htmlFor="uploadPic" >Profile Picture
-        <input type="file"id="uploadPic"title=" "  onChange={onChangeTextHandle} />
-        </label>
-        <label htmlFor="bio">upload Bio
-        <input type="text" id="bio" onChange={onChangeTextHandle} />
-        </label>
-        <button type="button" onClick={onClickHandler}>
-          upload
-        </button>
+          <label htmlFor="search">
+            Name<span>:</span>
+            <input
+              type="text"
+              size="24"
+              id="search"
+              placeholder={text}
+              onChange={onChangeTextHandle}
+            />
+          </label>
+          <label htmlFor="uploadPic">
+            Avatar :
+            <label
+              className={trueOrFalse ? "chooseFile" : "fileChosen"}
+              htmlFor="uploadPic">
+              {uploadPic}
+              <span className="material-symbols-outlined">upgrade</span>
+            </label>
+            <input
+              type="file"
+              id="uploadPic"
+              title=" "
+              onChange={onChangeTextHandle}
+            />
+          </label>
+
+          <label htmlFor="bio">
+            Write Bio<span>:</span>
+            <input type="text" id="bio" onChange={onChangeTextHandle} />
+          </label>
+          <button type="button" onClick={onClickHandler}>
+            post <span className="material-symbols-outlined"> campaign </span>
+          </button>
         </div>
       </HeaderContainer>
       <div>
-        {myList.map((person) => {
-          return (
-            <PersonBox>
-              <img
-                src={person.url}
-                alt={person.name}
-                style={{ width: 100, height: 150 }}></img>
-              <ul key="500">
-                <ul>{person.name}</ul>
-                <p>{person.aboutMe}</p>
-              </ul>
-            </PersonBox>
-          );
-        })}
+        <People people={people} />
       </div>
     </>
   );
 }
-const PersonBox = styled.div`
+
+const HeaderContainer = styled.div`
   display: flex;
-  flex-direction: row;
-  margin-top: 50px;
-  border: 5px groove black;
-  `
-  const HeaderContainer = styled.div`
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  font-family: "Wix Madefor Display", sans-serif;
+  font-size: 20px;
+
+  & label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bolder;
+    gap: 10px;
+  }
+  & .input-wrapper-container {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    align-items: flex-start;
+    width: 400px;
     gap: 20px;
+  }
 
-    & label {
-      display: flex;
-      font-weight: bolder;
-      gap: 10px;
-    }
-    &input-wrapper-container {
-      display: flex;
-      flex-direction: column;
-      width: 45%;
-      gap: 6px;
-    }
-    input[type="file"] {
-      color: transparent;
-    }
-  `;
+  & button {
+    display: flex;
+    justify-content: center;
+    align-self: center;
+    text-align: center;
+    width: 80px;
+    height: 30px;
+    background-color: #4d8cf2;
+    font-size: 15px;
+    padding: 5px;
+    color: #fff;
+    border: 2px solid #9ec3ff;
+    border-radius: 9px;
+  }
+  & button:only-of-type span {
+    visibility: hidden;
+  }
+  & button:hover:only-of-type span {
+    visibility: visible;
+    margin-left: 10px;
+  }
+  & button:hover {
+    display: flex;
+    background-color: #3b73ce;
+    border-color: #729fe7;
+    padding: 15px;
+    justify-content: center;
+    align-items: center;
+  }
+  span {
+    position: relative;
+    display: flex;
+    align-self: center;
+  }
+  input[type="file"] {
+    position: absolute;
+    display: none;
+  }
+  & label > .fileChosen {
+    background-color: #4d8cf2;
+    font-size: 15px;
+    padding: 3px;
+    border: 2px solid #9ec3ff;
+    border-radius: 9px;
+    margin-left: 20px;
+    color: white;
+  }
+  & label > .chooseFile {
+    background-color: #4d8cf2;
+    font-size: 15px;
+    padding: 3px;
+    border: 2px solid #9ec3ff;
+    border-radius: 9px;
+    margin-left: 20px;
+    color: yellow;
+  }
+  & .chooseFile:hover {
+    background-color: #3b73ce;
+    border-color: #729fe7;
+    cursor: pointer;
+  }
+  & .chooseFile .material-symbols-outlined {
+    visibility: hidden;
+  }
+  & .chooseFile:hover .material-symbols-outlined {
+    visibility: visible;
+    padding: 5px;
+  }
+`;
 
 export default App;
