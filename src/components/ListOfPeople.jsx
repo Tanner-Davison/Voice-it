@@ -60,7 +60,7 @@ const People = (props) => {
               <img
                 src={URL.createObjectURL(person.file)}
                 alt={person.name}
-                style={{ width: 100, height: 150 }}
+                style={{ width: 120, height: 150 }}
               />
             ) :(
               <p>no file</p>
@@ -74,11 +74,11 @@ const People = (props) => {
         );
       })}
       {myList.map((person) => (
-        <PersonBox key={person.objectID}>
+        <PersonBox key={person.objectID}keyid={person.objectID%2===0 ? 'true':'false'}>
           <img
             src={person.url}
             alt={person.name}
-            style={{ width: 100, height: 150 }}
+            style={{ width: 120, height: 150 }}
           />
           <ul>
             <h3>{person.name}</h3>
@@ -94,18 +94,30 @@ const PersonBox = styled.div`
   display: flex;
   flex-direction: row;
   margin-top: 50px;
-  border: 5px groove black;
+  margin-left: ${(props) => (props.keyid === "true" ? "7%" : "2%")};
+  border: 5px groove #3f1363;
   font-family: "Wix Madefor Display", sans-serif;
   background-color: #ffffff;
+  border-radius: 40px;
+  width: 90%;
+
   & ul {
   }
   & img {
     border-radius: 50%;
     box-shadow: 5px 5px 10px black;
     object-fit: cover;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    margin-left: 10px;
   }
   &:hover {
+    position: relative;
+    display: flex;
+    border-color:black;
     background-color: gainsboro;
+   
+    box-shadow: 0px 1px 20px lightseagreen, 0px 5px 5px black;
   }
 `;
 export default People;

@@ -70,7 +70,7 @@ function App() {
     <>
       <HeaderContainer>
         <div className="greeting">
-          {welcome.greeting} <span id='welcome'>{welcome.title}</span>
+          {welcome.greeting} <span id='welcome'>{welcome.title}<p id='beHeard'>Where your voice matters . . .</p></span>
         </div>
         <div className="input-wrapper-container">
           <label htmlFor="firstLastName">
@@ -94,7 +94,7 @@ function App() {
               cols="24"
               wrap="soft"
               maxLength="300"
-              placeholder="every opinion matters...Whats yours?"
+              placeholder="Everyone's opinion matters... Whats yours?"
               onChange={onChangeTextHandle}
             />
           </label>
@@ -127,13 +127,20 @@ function App() {
 }
 
 const HeaderContainer = styled.div`
-  position: sticky;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  flex-direction: row;
+  align-items: flext-start;
+  justify-content: center;
+  width: 100%;
   font-family: "Wix Madefor Display", sans-serif;
   font-size: 20px;
+  background: white;
+  color: white;
+  margin-top: 20px;
+  background-image: linear-gradient(to right, #434343 0%, black 100%);
+  border-radius: 50px;
+  border: 4px outset black;
+
   & .greeting {
     display: flex;
     font-weight: bolder;
@@ -141,12 +148,20 @@ const HeaderContainer = styled.div`
   }
   & #welcome {
     position: relative;
+
     border-left: 3px solid black;
     padding-left: 5px;
     border-top-left-radius: 50px;
     border-bottom-left-radius: 50px;
     border-top-right-radius: 50px;
     border-bottom-right-radius: 50px;
+  }
+  & #beHeard {
+    position: relative;
+    font-size: 17px;
+    display: flex;
+    right: 160px;
+    top: 105px;
   }
   & .greeting > h3 {
     display: flex;
@@ -163,54 +178,60 @@ const HeaderContainer = styled.div`
     align-items: center;
     font-weight: bolder;
     gap: 10px;
+    padding: 10px;
   }
   & .input-wrapper-container {
     position: sticky;
     display: flex;
     flex-direction: column;
     justify-content: center;
-
-    padding: 50px;
+    align-items: center;
+    padding: 10px;
     width: 400px;
     gap: 20px;
     margin-bottom: 25px;
+    margin-top: 15px;
     border-radius: 50px;
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+    box-shadow: 0px 1px 20px lightblue, 0px 5px 10px blueviolet;
+  }
+  & .input-wrapper-container:hover {
+    
+    box-shadow: 0px 1px 20px rebeccapurple, 0px 5px 10px rebeccapurple;
   }
 
   & button {
     position: relative;
-    top: 12px;
-    right: 14%;
     display: flex;
     justify-content: center;
-    align-self: center;
-    text-align: center;
+    align-self: flex-start;
+    left: 100px;
     width: 120px;
     height: 30px;
     background-color: #4d8cf2;
     font-size: 15px;
     padding: 5px;
     color: #fff;
-    border: 2px solid #9ec3ff;
+    border: 2px solid #4c70ab;
     border-radius: 9px;
-    margin-left: 10px;
-    
+    margin-top: 20px;
+    border-radius: 50px;
   }
-
-
   & button:hover {
     display: flex;
     background-color: #3b73ce;
     border-color: #729fe7;
-    width: 115px;
-    height: 35px;
+    width: 120px;
+    height: 30px;
+    border-radius: 11px;
     justify-content: center;
     align-items: center;
     cursor: pointer;
   }
   & #microphone {
-    margin-left:6px;
-    color:white;
+    margin-left: 6px;
+    color: white;
   }
   & .notTyping {
     display: flex;
@@ -219,8 +240,12 @@ const HeaderContainer = styled.div`
     border: 3px groove #e0ffff;
     height: 45px;
     resize: none;
+    font-family: "Wix Madefor Display", sans-serif;
+    align-items: center;
+    text-align: start;
+    justify-content: flex-end;
   }
-  
+
   & .typing {
     display: flex;
     background-color: #d5e6eb;
@@ -234,7 +259,6 @@ const HeaderContainer = styled.div`
     border-radius: 10px;
     height: 25px;
     font-family: "Wix Madefor Display", sans-serif;
-    font-weight: bold;
   }
   span {
     position: relative;
@@ -281,7 +305,7 @@ const HeaderContainer = styled.div`
     padding: 5px;
   }
 
-  @media only screen and (max-width: 470px) {
+  @media only screen and (max-width: 1059px) {
     & .greeting {
       display: flex;
       flex-direction: row;
@@ -295,6 +319,19 @@ const HeaderContainer = styled.div`
       text-align: end;
       margin-right: 5px;
     }
+    & .input-wrapper-container {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      margin-left: 300px;
+      padding: 10px;
+      width: 400px;
+      gap: 20px;
+      margin-bottom: 25px;
+      border-radius: 50px;
+    }
     & #welcome {
       position: relative;
       border-left: 5px solid black;
@@ -302,17 +339,27 @@ const HeaderContainer = styled.div`
       border-top-left-radius: 50px;
       border-bottom-left-radius: 50px;
       right: -3px;
-      background-color: #d9edf3;
     }
     position: relative;
+    display: flex;
+    flex-direction: column;
     justify-self: center;
+    align-items: center;
     margin-left: 20px;
-    border: 3px solid black;
+    border: 6px groove black;
+    border-radius: 50px;
     height: 100%;
     width: 92%;
     right: 8px;
+    gap: 50px;
+
     & .input-wrapper-container {
-      width: 90%;
+      position: relative;
+      display: flex;
+      right: 150px;
+      border-radius: 25px;
+      border: black;
+      box-shadow: 0px 1px 20px lightblue, 0px 5px 10px blueviolet;
     }
   }
 `;
