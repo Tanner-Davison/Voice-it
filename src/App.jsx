@@ -121,11 +121,11 @@ const HeaderContainer = styled.div`
   gap: 20px;
   font-family: "Wix Madefor Display", sans-serif;
   font-size: 20px;
+
   & .greeting{
     display:flex;
     font-weight:bolder;
     font-size:30px;
-    
   }
 
   & label {
@@ -148,7 +148,7 @@ const HeaderContainer = styled.div`
 
   & button {
     position: absolute;
-    top:140px;
+    top:150px;
     right:50%;
     display: flex;
     justify-content: center;
@@ -165,10 +165,12 @@ const HeaderContainer = styled.div`
   }
   & button:only-of-type span {
     visibility: hidden;
+    width:1px;
   }
   & button:hover:only-of-type span {
     visibility: visible;
     margin-left: 10px;
+    width:110px;
   }
   & button:hover {
     display: flex;
