@@ -3,8 +3,8 @@ import styled from "styled-components";
 
 const People = (props) => {
   const { people } = props;
-  
-  const myList= [
+
+  const myList = [
     {
       name: "Johnny",
       objectID: 0,
@@ -62,19 +62,25 @@ const People = (props) => {
                 alt={person.name}
                 style={{ width: 120, height: 150 }}
               />
-            ) :(
-              <p>no file</p>
+            ) : (
+              <img
+                src="https://www.radware.com/blog/wp-content/uploads/2020/06/anonymous-960x638.jpg"
+                alt="anonymous"
+                style={{ width: 120, height: 150 }}
+              />
             )}
-            
+
             <ul>
-              <h3>{person.name}</h3>
-              <p>{person.bio}</p>
+              <h3>{person.name ? person.name : 'I am Anonymous'}</h3>
+              <p>{person.bio ? person.bio : "“Greetings, citizens of the United States,” the figure said in a creepy, distorted voice. “This is a message from Anonymous to the Minneapolis Police Department.” The masked announcer addressed Floyd's killing and the larger pattern of police misconduct, concluding, “We will be exposing your many crimes to the world."}</p>
             </ul>
           </PersonBox>
         );
       })}
       {myList.map((person) => (
-        <PersonBox key={person.objectID}keyid={person.objectID%2===0 ? 'true':'false'}>
+        <PersonBox
+          key={person.objectID}
+          keyid={person.objectID % 2 === 0 ? "true" : "false"}>
           <img
             src={person.url}
             alt={person.name}
@@ -114,9 +120,9 @@ const PersonBox = styled.div`
   &:hover {
     position: relative;
     display: flex;
-    border-color:black;
+    border-color: black;
     background-color: gainsboro;
-   
+
     box-shadow: 0px 1px 20px lightseagreen, 0px 5px 5px black;
   }
 `;
