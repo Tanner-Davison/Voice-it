@@ -56,6 +56,8 @@ function App() {
 			bio: bio,
 		};
 		setPeople((prevPeople) => [newPerson, ...prevPeople]);
+	};
+	const formSubmitHandler = () =>{
 		setText(" ");
 		setCountID(countID + 1);
 		setTrueOrFalse(false);
@@ -64,8 +66,8 @@ function App() {
 			trueOrFalse ? "select image" : "Last File : " + selectedFile.name
 		);
 		setBioClass(false);
-	};
-
+		setBio("");
+	}
 	return (
 		<>
 			<HeaderContainer>
@@ -76,7 +78,7 @@ function App() {
 						<p id='beHeard'>Where your voice matters . . .</p>
 					</span>
 				</div>
-				<div className='input-wrapper-container'>
+				<form onSubmit={formSubmitHandler} className='input-wrapper-container'>
 					<label htmlFor='firstLastName'>
 						Name<span>:</span>
 						<input
@@ -99,6 +101,7 @@ function App() {
 							wrap='soft'
 							maxLength='300'
 							placeholder="Everyone's opinion matters... Whats yours?"
+							value={bio}
 							onChange={onChangeTextHandle}
 						/>
 					</label>
@@ -115,6 +118,7 @@ function App() {
 							id='uploadPic'
 							title=' '
 							onChange={onChangeTextHandle}
+							
 						/>
 					</label>
 					<button
@@ -128,7 +132,7 @@ function App() {
 							campaign{" "}
 						</span>
 					</button>
-				</div>
+				</form>
 			</HeaderContainer>
 			<div>
 				<People people={people} />
@@ -160,12 +164,11 @@ const HeaderContainer = styled.div`
 	& #welcome {
 		position: relative;
 
-		border-left: 3px solid black;
+		border-left: 6px solid black;
 		padding-left: 5px;
-		border-top-left-radius: 50px;
-		border-bottom-left-radius: 50px;
-		border-top-right-radius: 50px;
-		border-bottom-right-radius: 50px;
+		border-top-left-radius: 25px;
+		border-bottom-left-radius: 25px;
+	
 	}
 	& #beHeard {
 		position: relative;
